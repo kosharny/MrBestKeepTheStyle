@@ -1,17 +1,13 @@
-//
-//  MrBestKeepTheStyleApp.swift
-//  MrBestKeepTheStyle
-//
-//  Created by Maksim Kosharny on 13.02.2026.
-//
-
 import SwiftUI
 
 @main
 struct MrBestKeepTheStyleApp: App {
+    @StateObject private var viewModel = ViewModelMB()
+    
     var body: some Scene {
         WindowGroup {
-            ContentView()
+            MainViewMB()
+                .environmentObject(viewModel)
         }
     }
 }
