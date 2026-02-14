@@ -11,6 +11,7 @@ enum TabMB {
 struct CustomTabBarMB: View {
     @Binding var currentTab: TabMB
     @EnvironmentObject var themeManager: ThemeManagerMB
+    @State private var isAddButtonPressed = false
     
     var body: some View {
         HStack {
@@ -19,13 +20,25 @@ struct CustomTabBarMB: View {
             
             // Central Add Button
             Button(action: {
-                withAnimation { currentTab = .add }
+                withAnimation(.spring(response: 0.3, dampingFraction: 0.6)) {
+                    isAddButtonPressed = true
+                }
+                
+                DispatchQueue.main.asyncAfter(deadline: .now() + 0.1) {
+                    withAnimation(.spring(response: 0.3, dampingFraction: 0.6)) {
+                        isAddButtonPressed = false
+                        currentTab = .add
+                    }
+                }
             }) {
                 Image(systemName: "plus")
                     .font(.title2)
                     .fontWeight(.bold)
                     .foregroundColor(.black)
-                    .frame(width: 60, height: 60)
+                    .frame(
+                        width: (isAddButtonPressed || currentTab == .add) ? 60 : 50,
+                        height: (isAddButtonPressed || currentTab == .add) ? 60 : 50
+                    )
                     .background(
                         LinearGradient(
                             colors: [themeManager.primaryColor, themeManager.secondaryColor],
@@ -41,6 +54,7 @@ struct CustomTabBarMB: View {
                     .shadow(color: themeManager.primaryColor.opacity(0.6), radius: 10, x: 0, y: 5)
                     .offset(y: -30) // Lifted higher in the bump
             }
+            .contentShape(Rectangle().offset(y: -30))
             .zIndex(1) // Ensure on top
             
             TabBarButton(icon: "chart.bar.fill", tab: .stats, currentTab: $currentTab)

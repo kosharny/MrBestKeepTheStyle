@@ -8,16 +8,11 @@ struct AboutViewMB: View {
             GlowBackgroundMB()
             
             VStack(spacing: 30) {
-                // Header handled by navigation or parent, but let's add content
-                Image(systemName: "crown.fill")
-                    .font(.system(size: 80))
-                    .foregroundColor(themeManager.secondaryColor)
-                    .padding(.top, 50)
+                Image("mainLogo")
+                    .resizable()
+                    .scaledToFit()
+                    .frame(width: 350, height: 350)
                 
-                Text("MrBest: Keep The Style")
-                    .font(.title)
-                    .fontWeight(.bold)
-                    .foregroundColor(.white)
                 
                 Text("Version 1.0.0")
                     .font(.caption)
@@ -36,11 +31,6 @@ struct AboutViewMB: View {
                 }
                 
                 Spacer()
-                
-                Text("© 2026 MrBest Inc.")
-                    .font(.footnote)
-                    .foregroundColor(.gray)
-                    .padding(.bottom, 50)
             }
         }
     }

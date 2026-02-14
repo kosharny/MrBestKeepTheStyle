@@ -1,13 +1,16 @@
 import SwiftUI
+import StoreKit
 
 struct SettingsViewMB: View {
     @EnvironmentObject var themeManager: ThemeManagerMB
-    @EnvironmentObject var storeManager: StoreManagerMB
     @EnvironmentObject var viewModel: ViewModelMB
     
-    @State private var showingPaywall = false
+    @StateObject private var store = StoreManagerMB.shared
+    @State private var selectedThemeForPaywall: AppThemeMB?
     @State private var showingAbout = false
-    @State private var showingMotivation = false
+    @State private var showRestoreAlert = false
+    @State private var restoreMessage = ""
+    @State private var restoreTitle = ""
     
     var body: some View {
         NavigationStack {
@@ -21,30 +24,14 @@ struct SettingsViewMB: View {
                         VStack(spacing: 25) {
                             
                             // Premium Banner
-                            if !storeManager.purchasedProductIDs.contains("com.mrbest.keepthestyle.royalbluepro") {
+                            if !viewModel.premiumEnabled {
                                 PremiumBannerMB {
-                                    showingPaywall = true
+                                    selectedThemeForPaywall = .royalBluePro
                                 }
                                 .padding(.horizontal)
                             }
                             
-                            // Motivation Hub Link
-                            Button(action: { showingMotivation = true }) {
-                                HStack {
-                                    Image(systemName: "brain.head.profile")
-                                        .foregroundColor(themeManager.secondaryColor)
-                                    Text("Motivation Hub")
-                                        .foregroundColor(.white)
-                                    Spacer()
-                                    Image(systemName: "chevron.right")
-                                        .foregroundColor(.gray)
-                                }
-                                .padding()
-                                .background(Color.white.opacity(0.05))
-                                .cornerRadius(15)
-                            }
-                            .padding(.horizontal)
-                            
+
                             // Theme Selection
                             VStack(alignment: .leading, spacing: 10) {
                                 Text("THEME")
@@ -55,14 +42,10 @@ struct SettingsViewMB: View {
                                 
                                 ForEach(AppThemeMB.allCases, id: \.self) { theme in
                                     Button(action: {
-                                        if theme.isPremium && !storeManager.isPurchased("com.mrbest.keepthestyle." + theme.rawValue.lowercased()) && !storeManager.purchasedProductIDs.contains("com.mrbest.keepthestyle." + theme.rawValue.lowercased()) {
-                                             if theme == .standard {
-                                                 themeManager.currentTheme = theme
-                                             } else {
-                                                  themeManager.currentTheme = theme
-                                             }
-                                        } else {
+                                        if store.hasAccess(to: theme) {
                                             themeManager.currentTheme = theme
+                                        } else {
+                                            selectedThemeForPaywall = theme
                                         }
                                     }) {
                                         HStack {
@@ -74,19 +57,32 @@ struct SettingsViewMB: View {
                                                 .fontWeight(.medium)
                                                 .foregroundColor(.white)
                                             
-                                            if theme == .royalBluePro || theme == .darkNeonPro {
-                                                Text("PRO")
-                                                    .font(.caption2)
-                                                    .fontWeight(.bold)
-                                                    .padding(4)
-                                                    .background(Color.yellow)
-                                                    .foregroundColor(.black)
-                                                    .cornerRadius(4)
+                                            if theme.isPremium && !store.hasAccess(to: theme) {
+                                                // Lock icon for unpurchased premium themes
+                                                Image(systemName: "lock.fill")
+                                                    .font(.caption)
+                                                    .foregroundColor(.gray)
                                             }
                                             
                                             Spacer()
                                             
-                                            if themeManager.currentTheme == theme {
+                                            // Show price for unpurchased premium themes
+                                            if theme.isPremium && !store.hasAccess(to: theme) {
+                                                if let product = store.products.first(where: { $0.id == theme.productID }) {
+                                                    Text(product.displayPrice)
+                                                        .font(.subheadline)
+                                                        .fontWeight(.semibold)
+                                                        .foregroundColor(themeManager.secondaryColor)
+                                                } else {
+                                                    Text("PRO")
+                                                        .font(.caption2)
+                                                        .fontWeight(.bold)
+                                                        .padding(4)
+                                                        .background(Color.yellow)
+                                                        .foregroundColor(.black)
+                                                        .cornerRadius(4)
+                                                }
+                                            } else if themeManager.currentTheme == theme {
                                                 Image(systemName: "checkmark")
                                                     .foregroundColor(themeManager.secondaryColor)
                                             }
@@ -107,16 +103,27 @@ struct SettingsViewMB: View {
                                     .foregroundColor(.gray)
                                     .padding(.horizontal)
                                 
+                                Button(action: {
+                                    Task {
+                                        await store.restorePurchases()
+                                        if viewModel.premiumEnabled {
+                                            restoreTitle = "Success"
+                                            restoreMessage = "Your purchases have been restored!"
+                                        } else {
+                                            restoreTitle = "No Purchases Found"
+                                            restoreMessage = "We couldn't find any previous purchases."
+                                        }
+                                        showRestoreAlert = true
+                                    }
+                                }) {
+                                    SettingRow(icon: "arrow.clockwise", title: "Restore Purchases")
+                                }
+                                .padding(.horizontal)
+                                
                                 Button(action: { showingAbout = true }) {
                                     SettingRow(icon: "info.circle", title: "About App")
                                 }
                                 .padding(.horizontal)
-                                
-                                SettingRow(icon: "envelope", title: "Contact Support")
-                                    .padding(.horizontal)
-                                
-                                SettingRow(icon: "shield", title: "Privacy Policy")
-                                    .padding(.horizontal)
                             }
                             
                             Spacer()
@@ -126,18 +133,21 @@ struct SettingsViewMB: View {
                 }
             }
             .toolbar(.hidden, for: .navigationBar)
-            .sheet(isPresented: $showingPaywall) {
-                PaywallViewMB()
-                    .environmentObject(storeManager)
+            .sheet(item: $selectedThemeForPaywall) { theme in
+                PaywallViewMB(theme: theme)
+                    .environmentObject(viewModel)
                     .environmentObject(themeManager)
             }
             .sheet(isPresented: $showingAbout) {
                 AboutViewMB()
                     .environmentObject(themeManager)
             }
-            .navigationDestination(isPresented: $showingMotivation) {
-                MotivationViewMB()
-            }
+            .customAlert(isPresented: $showRestoreAlert, alert: CustomAlertMB(
+                title: restoreTitle,
+                message: restoreMessage,
+                primaryButton: .init(title: "OK", isPrimary: true) { },
+                secondaryButton: nil
+            ))
         }
     }
     

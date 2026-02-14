@@ -97,12 +97,6 @@ struct InfographicsViewMB: View {
             VStack(spacing: 0) {
                 // Header
                 HStack {
-                    Button(action: { dismiss() }) {
-                        Image(systemName: "chevron.left")
-                            .font(.title3)
-                            .foregroundColor(themeManager.secondaryColor)
-                    }
-                    
                     Spacer()
                     
                     Text("World Statistics")
@@ -112,9 +106,11 @@ struct InfographicsViewMB: View {
                     
                     Spacer()
                     
-                    Image(systemName: "chevron.left")
-                        .font(.title3)
-                        .opacity(0)
+                    Button(action: { dismiss() }) {
+                        Image(systemName: "xmark.circle.fill")
+                            .font(.title3)
+                            .foregroundColor(themeManager.secondaryColor)
+                    }
                 }
                 .padding()
                 
