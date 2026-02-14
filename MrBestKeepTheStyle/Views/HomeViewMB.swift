@@ -6,6 +6,8 @@ struct HomeViewMB: View {
     
     @State private var showArticles = false
     @State private var showInfographics = false
+    @State private var selectedArticle: MotivationModelMB?
+    @State private var showQuiz = false
     
     // Grid layout for habits
     let columns = [
@@ -22,7 +24,7 @@ struct HomeViewMB: View {
                     // Header
                     HStack {
                         VStack(alignment: .leading, spacing: 5) {
-                            Text("Day \(dayOfYear())")
+                            Text("Day \(viewModel.daysSinceInstall)")
                                 .font(.caption)
                                 .fontWeight(.bold)
                                 .foregroundColor(themeManager.secondaryColor)
@@ -100,6 +102,104 @@ struct HomeViewMB: View {
                         .padding(.horizontal)
                     }
                     
+                    // Readiness Quiz Card
+                    Button(action: { showQuiz = true }) {
+                        VStack(alignment: .leading, spacing: 15) {
+                            HStack {
+                                ZStack {
+                                    Circle()
+                                        .fill(
+                                            LinearGradient(
+                                                colors: [themeManager.primaryColor, themeManager.secondaryColor],
+                                                startPoint: .topLeading,
+                                                endPoint: .bottomTrailing
+                                            )
+                                        )
+                                        .frame(width: 50, height: 50)
+                                    
+                                    Image(systemName: viewModel.readinessQuiz.isCompleted ? "checkmark.seal.fill" : "questionmark.circle.fill")
+                                        .font(.title2)
+                                        .foregroundColor(.white)
+                                }
+                                
+                                VStack(alignment: .leading, spacing: 4) {
+                                    Text("Readiness Quiz")
+                                        .font(.title3)
+                                        .fontWeight(.bold)
+                                        .foregroundColor(.white)
+                                    
+                                    Text(viewModel.readinessQuiz.isCompleted ? "View your results" : "Discover your motivation level")
+                                        .font(.caption)
+                                        .foregroundColor(.gray)
+                                }
+                                
+                                Spacer()
+                                
+                                Image(systemName: "chevron.right")
+                                    .foregroundColor(themeManager.secondaryColor)
+                            }
+                            
+                            if viewModel.readinessQuiz.isCompleted {
+                                // Show Results
+                                HStack {
+                                    VStack(alignment: .leading, spacing: 4) {
+                                        Text("Your Level")
+                                            .font(.caption)
+                                            .foregroundColor(.gray)
+                                        
+                                        Text(viewModel.readinessQuiz.readinessLevel)
+                                            .font(.headline)
+                                            .fontWeight(.bold)
+                                            .foregroundColor(themeManager.secondaryColor)
+                                    }
+                                    
+                                    Spacer()
+                                    
+                                    VStack(alignment: .trailing, spacing: 4) {
+                                        Text("Score")
+                                            .font(.caption)
+                                            .foregroundColor(.gray)
+                                        
+                                        Text("\(viewModel.readinessQuiz.percentage)%")
+                                            .font(.headline)
+                                            .fontWeight(.bold)
+                                            .foregroundColor(.white)
+                                    }
+                                }
+                                .padding(.top, 5)
+                            } else {
+                                // Call to Action
+                                HStack {
+                                    Image(systemName: "star.fill")
+                                        .foregroundColor(.yellow)
+                                    
+                                    Text("Take the quiz to assess your readiness for change")
+                                        .font(.subheadline)
+                                        .foregroundColor(.white.opacity(0.8))
+                                }
+                                .padding(.top, 5)
+                            }
+                        }
+                        .padding()
+                        .background(
+                            RoundedRectangle(cornerRadius: 15)
+                                .fill(Color.white.opacity(0.05))
+                        )
+                        .overlay(
+                            RoundedRectangle(cornerRadius: 15)
+                                .stroke(
+                                    LinearGradient(
+                                        colors: [themeManager.primaryColor.opacity(0.5), themeManager.secondaryColor.opacity(0.3)],
+                                        startPoint: .topLeading,
+                                        endPoint: .bottomTrailing
+                                    ),
+                                    lineWidth: 1.5
+                                )
+                        )
+                        .shadow(color: themeManager.primaryColor.opacity(0.2), radius: 10, x: 0, y: 5)
+                    }
+                    .padding(.horizontal)
+                    
                     // Progress Chart
                     if !viewModel.habits.isEmpty {
                         let buildHabits = viewModel.habits.filter { $0.type == .build }
@@ -118,27 +218,20 @@ struct HomeViewMB: View {
                     
                     // Motivation Articles Preview
                     VStack(alignment: .leading, spacing: 15) {
-                        HStack {
-                            Text("Motivation")
-                                .font(.title3)
-                                .fontWeight(.bold)
-                                .foregroundColor(.white)
-                            
-                            Spacer()
-                            
-                            Button(action: { showArticles = true }) {
-                                Text("See All")
-                                    .font(.subheadline)
-                                    .foregroundColor(themeManager.secondaryColor)
-                            }
-                        }
-                        .padding(.horizontal)
+                        Text("Motivation")
+                            .font(.title3)
+                            .fontWeight(.bold)
+                            .foregroundColor(.white)
+                            .padding(.horizontal)
                         
                         ScrollView(.horizontal, showsIndicators: false) {
                             HStack(spacing: 15) {
-                                ForEach(viewModel.motivationalBlocks.prefix(3)) { article in
+                                ForEach(viewModel.motivationalBlocks.shuffled().prefix(Int.random(in: 3...4))) { article in
                                     ArticleCardMB(article: article)
-                                        .frame(width: 280)
+                                        .frame(width: 280, height: 120)
+                                        .onTapGesture {
+                                            selectedArticle = article
+                                        }
                                 }
                             }
                             .padding(.horizontal)
@@ -222,6 +315,95 @@ struct HomeViewMB: View {
             }
             .scrollContentBackground(.hidden)
             .background(Color.clear) // Force clear
+            
+            // Custom Modal Overlay for Article Detail
+            if let article = selectedArticle {
+                ZStack {
+                    // Background overlay - tap to dismiss
+                    Color.black.opacity(0.6)
+                        .ignoresSafeArea()
+                        .onTapGesture {
+                            withAnimation(.spring(response: 0.3, dampingFraction: 0.8)) {
+                                selectedArticle = nil
+                            }
+                        }
+                    
+                    // Centered Article Card
+                    VStack(alignment: .leading, spacing: 15) {
+                        // Close button
+                        HStack {
+                            Spacer()
+                            Button(action: {
+                                withAnimation(.spring(response: 0.3, dampingFraction: 0.8)) {
+                                    selectedArticle = nil
+                                }
+                            }) {
+                                Image(systemName: "xmark.circle.fill")
+                                    .font(.title2)
+                                    .foregroundColor(.white.opacity(0.7))
+                            }
+                        }
+                        
+                        // Icon
+                        ZStack {
+                            Circle()
+                                .fill(
+                                    LinearGradient(
+                                        colors: [themeManager.primaryColor, themeManager.secondaryColor],
+                                        startPoint: .topLeading,
+                                        endPoint: .bottomTrailing
+                                    )
+                                )
+                                .frame(width: 60, height: 60)
+                            
+                            Image(systemName: "lightbulb.fill")
+                                .font(.system(size: 30))
+                                .foregroundColor(.white)
+                        }
+                        
+                        // Title
+                        VStack(alignment: .leading, spacing: 6) {
+                            Text(article.subtitle)
+                                .font(.caption)
+                                .foregroundColor(themeManager.secondaryColor)
+                            
+                            Text(article.title)
+                                .font(.system(size: 22, weight: .bold, design: .rounded))
+                                .foregroundColor(.white)
+                                .lineLimit(2)
+                        }
+                        
+                        // Content in ScrollView
+                        ScrollView {
+                            Text(article.content)
+                                .font(.subheadline)
+                                .foregroundColor(.white.opacity(0.9))
+                                .lineSpacing(4)
+                        }
+                        .frame(height: 180)
+                    }
+                    .padding(20)
+                    .frame(width: 340, height: 380)
+                    .background(
+                        RoundedRectangle(cornerRadius: 25)
+                            .fill(Color(hex: "1a1a2e"))
+                    )
+                    .overlay(
+                        RoundedRectangle(cornerRadius: 25)
+                            .stroke(
+                                LinearGradient(
+                                    colors: [themeManager.primaryColor.opacity(0.5), themeManager.secondaryColor.opacity(0.3)],
+                                    startPoint: .topLeading,
+                                    endPoint: .bottomTrailing
+                                ),
+                                lineWidth: 2
+                            )
+                    )
+                    .shadow(color: themeManager.primaryColor.opacity(0.3), radius: 20, x: 0, y: 10)
+                    .transition(.scale.combined(with: .opacity))
+                }
+                .zIndex(100)
+            }
         }
         .sheet(isPresented: $showArticles) {
             ArticlesViewMB()
@@ -232,10 +414,11 @@ struct HomeViewMB: View {
             InfographicsViewMB()
                 .environmentObject(themeManager)
         }
-    }
-    
-    func dayOfYear() -> Int {
-        return Calendar.current.ordinality(of: .day, in: .year, for: Date()) ?? 1
+        .sheet(isPresented: $showQuiz) {
+            ReadinessQuizViewMB()
+                .environmentObject(viewModel)
+                .environmentObject(themeManager)
+        }
     }
 }
 

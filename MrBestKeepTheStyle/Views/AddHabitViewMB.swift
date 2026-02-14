@@ -63,14 +63,19 @@ struct AddHabitViewMB: View {
                             }
                             .padding(.horizontal)
                             
-                            // Slider
+                            // Picker for Target Days
                             VStack(alignment: .leading, spacing: 10) {
-                                Text("Target Duration: \(Int(targetDays)) Days")
+                                Text("Target Duration")
                                     .font(.headline)
                                     .foregroundColor(.white)
                                 
-                                Slider(value: $targetDays, in: 7...365, step: 1)
-                                    .accentColor(themeManager.primaryColor)
+                                Picker("Days", selection: $targetDays) {
+                                    ForEach([7, 14, 21, 30, 45, 60, 90, 120, 180, 365], id: \.self) { days in
+                                        Text("\(days) Days").tag(Double(days))
+                                    }
+                                }
+                                .pickerStyle(.wheel)
+                                .frame(height: 120)
                             }
                             .padding()
                             .background(Color.white.opacity(0.05))
@@ -103,7 +108,7 @@ struct AddHabitViewMB: View {
                                         type = .build
                                     }
                                 },
-                                colorOverride: type == .quit ? .red : nil
+                                colorOverride: type == .quit ? .red : .green
                             )
                         }
                         .padding(.top, 20)
@@ -112,10 +117,12 @@ struct AddHabitViewMB: View {
                     }
                 }
             }
-            .alert(isPresented: $showAlert) {
-                Alert(title: Text("Missing Information"), message: Text("Please enter a habit name."), dismissButton: .default(Text("OK")))
-            }
-            .navigationBarHidden(true)
+            .customAlert(isPresented: $showAlert, alert: CustomAlertMB(
+                title: "Missing Information",
+                message: "Please enter a habit name to continue.",
+                primaryButton: .init(title: "OK", isPrimary: true) { },
+                secondaryButton: nil
+            )).navigationBarHidden(true)
         }
     }
     
@@ -160,13 +167,14 @@ struct DescriptionField: View {
                 if text.isEmpty {
                     Text(placeholder)
                         .foregroundColor(.gray.opacity(0.6))
-                        .padding(.horizontal, 4)
-                        .padding(.vertical, 8)
+                        .padding(.horizontal, 8)
+                        .padding(.vertical, 12)
                 }
                 
                 TextEditor(text: $text)
                     .frame(height: 100)
                     .scrollContentBackground(.hidden)
+                    .padding(8)
                     .background(Color.white.opacity(0.1))
                     .cornerRadius(10)
                     .foregroundColor(.white)

@@ -225,15 +225,15 @@ struct HabitDetailSheetMB: View {
                 }
             }
         }
-        .alert("Reset Progress?", isPresented: $showResetAlert) {
-            Button("Cancel", role: .cancel) { }
-            Button("Reset", role: .destructive) {
+        .customAlert(isPresented: $showResetAlert, alert: CustomAlertMB(
+            title: "Reset Progress?",
+            message: "This will reset all progress for this habit. This action cannot be undone.",
+            primaryButton: .init(title: "Reset", isPrimary: true) {
                 viewModel.resetHabit(habit)
                 dismiss()
-            }
-        } message: {
-            Text("This will reset all progress for this habit. This action cannot be undone.")
-        }
+            },
+            secondaryButton: .init(title: "Cancel") { }
+        ))
     }
 }
 

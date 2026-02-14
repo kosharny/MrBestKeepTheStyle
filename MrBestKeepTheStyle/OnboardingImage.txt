@@ -1,0 +1,23 @@
+ONBOARDING IMAGE SPECIFICATIONS
+================================
+
+Image 1: onboarding_welcome.png
+Description: A motivational illustration showing a person standing at the bottom of a mountain or staircase, looking up with determination. The person should be in silhouette or minimal style. Use gradient colors matching the app theme (purple/blue tones). The image should convey the beginning of a journey, aspiration, and the first step towards self-improvement. Include subtle elements like a sunrise or light rays to symbolize new beginnings.
+
+Image 2: onboarding_habits.png
+Description: An illustration depicting habit tracking and daily routines. Show a stylized calendar or checklist with checkmarks, combined with icons representing different habits (exercise, reading, meditation). Use the app's color scheme with gradient effects. The composition should feel organized and achievable, showing the concept of building positive habits and breaking bad ones. Include visual elements like arrows pointing upward to show progress.
+
+Image 3: onboarding_journal.png
+Description: An artistic representation of journaling and self-reflection. Show an open journal or notebook with flowing thoughts, perhaps represented as light particles or abstract shapes emerging from the pages. Use warm, inviting colors with the app's gradient theme. The image should convey introspection, personal growth, and documenting one's journey. Include subtle elements like a pen, stars, or inspirational symbols.
+
+Image 4: onboarding_progress.png
+Description: A dynamic illustration showing progress and achievement. Depict a person reaching the top of a mountain or completing a journey, with a trophy or crown nearby. Use vibrant colors with the app's signature gradients (purple to blue/gold). The image should feel celebratory and motivating, showing the transformation from beginning to success. Include visual elements like progress bars, stars, or achievement badges to reinforce the concept of growth and accomplishment.
+
+DESIGN NOTES:
+- All images should use consistent art style (modern, minimal, gradient-based)
+- Color palette: Purple (#8B5CF6), Blue (#3B82F6), Gold/Yellow (#F59E0B)
+- Images should be vertical/portrait orientation
+- Recommended size: 300x400 pixels minimum
+- Use rounded corners to match app design language
+- Avoid too much detail - keep illustrations clean and modern
+- Each image should be recognizable even at smaller sizes

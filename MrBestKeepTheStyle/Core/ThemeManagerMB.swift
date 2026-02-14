@@ -1,10 +1,12 @@
 import SwiftUI
 import Combine
 
-enum AppThemeMB: String, CaseIterable, Codable {
+enum AppThemeMB: String, CaseIterable, Codable, Identifiable {
     case standard
     case royalBluePro
     case darkNeonPro
+    
+    var id: String { self.rawValue }
     
     var displayName: String {
         switch self {
@@ -16,6 +18,14 @@ enum AppThemeMB: String, CaseIterable, Codable {
     
     var isPremium: Bool {
         return self != .standard
+    }
+    
+    var productID: String? {
+        switch self {
+        case .standard: return nil
+        case .royalBluePro: return "premium_theme_royal_blue"
+        case .darkNeonPro: return "premium_theme_dark_neon"
+        }
     }
 }
 
@@ -71,6 +81,23 @@ class ThemeManagerMB: ObservableObject {
     
     var glowColor: Color {
         return secondaryColor.opacity(0.6)
+    }
+    
+    // MARK: - Theme-Specific Colors
+    func primaryColor(for theme: AppThemeMB) -> Color {
+        switch theme {
+        case .standard: return Color(hex: "2563FF")
+        case .royalBluePro: return Color(hex: "4169E1")
+        case .darkNeonPro: return Color(hex: "FF00FF")
+        }
+    }
+    
+    func secondaryColor(for theme: AppThemeMB) -> Color {
+        switch theme {
+        case .standard: return Color(hex: "2FFFD3")
+        case .royalBluePro: return Color(hex: "FFD700")
+        case .darkNeonPro: return Color(hex: "00FFFF")
+        }
     }
 }
 

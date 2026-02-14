@@ -71,6 +71,10 @@ struct MainViewMB: View {
                         }
                         .toolbarBackground(.hidden, for: .tabBar)
                         .background(Color.clear)
+                        .onTapGesture {
+                            // Hide keyboard when tapping outside text fields
+                            UIApplication.shared.sendAction(#selector(UIResponder.resignFirstResponder), to: nil, from: nil, for: nil)
+                        }
                         
                         CustomTabBarMB(currentTab: $currentTab)
                     }

@@ -9,6 +9,13 @@ class ViewModelMB: ObservableObject {
         didSet { saveJournal() }
     }
     @Published var showOnboarding: Bool = true
+    @Published var appInstallDate: Date = Date()
+    @Published var premiumEnabled: Bool = false
+    @Published var readinessQuiz: ReadinessQuizMB = ReadinessQuizMB.createDefaultQuiz() {
+        didSet { saveQuiz() }
+    }
+    
+    private var cancellables = Set<AnyCancellable>()
     
     // Core Managers
     let themeManager = ThemeManagerMB()
@@ -67,6 +74,16 @@ class ViewModelMB: ObservableObject {
     
     // MARK: - Initialization
     init() {
+        // Track app installation date
+        if let savedDate = UserDefaults.standard.object(forKey: "appInstallDateMB") as? Date {
+            self.appInstallDate = savedDate
+        } else {
+            // First launch - save current date
+            let now = Date()
+            self.appInstallDate = now
+            UserDefaults.standard.set(now, forKey: "appInstallDateMB")
+        }
+        
         if UserDefaults.standard.object(forKey: "showOnboardingMB") == nil {
             // First launch
             self.showOnboarding = true
@@ -77,6 +94,19 @@ class ViewModelMB: ObservableObject {
         
         loadHabits()
         loadJournal()
+        loadQuiz()
+        
+        // Check premium status
+        self.premiumEnabled = UserDefaults.standard.bool(forKey: "premiumEnabledMB")
+        
+        // Subscribe to StoreManager
+        StoreManagerMB.shared.$purchasedProductIDs
+            .sink { [weak self] purchasedIDs in
+                let isPremium = !purchasedIDs.isEmpty
+                self?.premiumEnabled = isPremium
+                UserDefaults.standard.set(isPremium, forKey: "premiumEnabledMB")
+            }
+            .store(in: &cancellables)
     }
     
     func completeOnboarding() {
@@ -109,6 +139,25 @@ class ViewModelMB: ObservableObject {
            let decoded = try? JSONDecoder().decode([JournalEntryMB].self, from: data) {
             journalEntries = decoded
         }
+    }
+    
+    func saveQuiz() {
+        let encoder = JSONEncoder()
+        if let encoded = try? encoder.encode(readinessQuiz) {
+            UserDefaults.standard.set(encoded, forKey: "readinessQuizMB")
+        }
+    }
+    
+    func loadQuiz() {
+        if let savedQuiz = UserDefaults.standard.data(forKey: "readinessQuizMB") {
+            let decoder = JSONDecoder()
+            if let loadedQuiz = try? decoder.decode(ReadinessQuizMB.self, from: savedQuiz) {
+                self.readinessQuiz = loadedQuiz
+                return
+            }
+        }
+        // If no saved quiz or decoding failed, use default
+        self.readinessQuiz = ReadinessQuizMB.createDefaultQuiz()
     }
     
     // MARK: - User Intentions
@@ -166,5 +215,11 @@ class ViewModelMB: ObservableObject {
         // Mock calculation based on completion
         let total = habits.reduce(0) { $0 + $1.progress }
         return totalHabitsCount > 0 ? (total / Double(totalHabitsCount)) * 100 : 0
+    }
+    
+    var daysSinceInstall: Int {
+        let calendar = Calendar.current
+        let components = calendar.dateComponents([.day], from: appInstallDate, to: Date())
+        return max(1, (components.day ?? 0) + 1) // +1 to count installation day as day 1
     }
 }

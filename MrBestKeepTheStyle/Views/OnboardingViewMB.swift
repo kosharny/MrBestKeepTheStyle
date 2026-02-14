@@ -15,96 +15,98 @@ struct OnboardingViewMB: View {
             
             VStack(spacing: 0) {
                 Spacer()
+                    .frame(height: 60)
                 
-                // Animated Image area
+                let imageName: String = {
+                    if currentPage == 0 { return "onboarding_welcome" }
+                    else if currentPage == 1 { return "onboarding_habits" }
+                    else if currentPage == 2 { return "onboarding_journal" }
+                    else { return "onboarding_progress" }
+                }()
+
                 ZStack {
-                    if currentPage == 0 {
-                        Image(systemName: "stairs")
-                            .resizable()
-                            .aspectRatio(contentMode: .fit)
-                            .frame(height: 250)
-                            .foregroundStyle(
-                                LinearGradient(
-                                    colors: [themeManager.secondaryColor, themeManager.primaryColor],
-                                    startPoint: .topLeading,
-                                    endPoint: .bottomTrailing
-                                )
+                    RoundedRectangle(cornerRadius: 25)
+                        .fill(
+                            LinearGradient(
+                                colors: [
+                                    themeManager.primaryColor.opacity(0.15),
+                                    themeManager.secondaryColor.opacity(0.15)
+                                ],
+                                startPoint: .topLeading,
+                                endPoint: .bottomTrailing
                             )
-                            .shadow(color: themeManager.secondaryColor.opacity(0.5), radius: 30)
-                    } else if currentPage == 1 {
-                        Image(systemName: "link.badge.plus")
-                            .resizable()
-                            .aspectRatio(contentMode: .fit)
-                            .frame(height: 250)
-                            .foregroundStyle(
-                                LinearGradient(
-                                    colors: [.red, .orange],
-                                    startPoint: .topLeading,
-                                    endPoint: .bottomTrailing
-                                )
-                            )
-                            .shadow(color: .red.opacity(0.5), radius: 30)
-                    } else if currentPage == 2 {
-                        Image(systemName: "star.fill")
-                            .resizable()
-                            .aspectRatio(contentMode: .fit)
-                            .frame(height: 250)
-                            .foregroundStyle(
-                                LinearGradient(
-                                    colors: [.yellow, .orange],
-                                    startPoint: .topLeading,
-                                    endPoint: .bottomTrailing
-                                )
-                            )
-                            .shadow(color: .yellow.opacity(0.5), radius: 30)
-                    } else {
-                        Image(systemName: "crown.fill")
-                            .resizable()
-                            .aspectRatio(contentMode: .fit)
-                            .frame(height: 250)
-                            .foregroundStyle(
-                                LinearGradient(
-                                    colors: [themeManager.primaryColor, themeManager.secondaryColor],
-                                    startPoint: .topLeading,
-                                    endPoint: .bottomTrailing
-                                )
-                            )
-                            .shadow(color: themeManager.primaryColor.opacity(0.5), radius: 30)
-                    }
+                        )
+
+                    Image(imageName)
+                        .resizable()
+                        .aspectRatio(contentMode: .fill)
+                        .frame(width: 290, height: 290)
+                        .clipped()
+                        .clipShape(RoundedRectangle(cornerRadius: 25))
+
+                    RoundedRectangle(cornerRadius: 25)
+                        .stroke(
+                            LinearGradient(
+                                colors: [
+                                    themeManager.primaryColor.opacity(0.6),
+                                    themeManager.secondaryColor.opacity(0.6),
+                                    themeManager.primaryColor.opacity(0.3)
+                                ],
+                                startPoint: .topLeading,
+                                endPoint: .bottomTrailing
+                            ),
+                            lineWidth: 3
+                        )
                 }
+                .frame(width: 290, height: 290)
+                .shadow(color: themeManager.primaryColor.opacity(0.3), radius: 30, x: 0, y: 10)
                 .scaleEffect(imageScale)
                 .opacity(imageOpacity)
+                .padding(.bottom, 60)
                 
-                Spacer()
-                
-                // Modern Bottom Card
-                VStack(alignment: .leading, spacing: 25) {
-                    VStack(alignment: .leading, spacing: 12) {
+                VStack(alignment: .leading, spacing: 28) {
+                    // Title and Subtitle
+                    VStack(alignment: .leading, spacing: 14) {
                         Text(getTitle(for: currentPage))
-                            .font(.system(size: 32, weight: .heavy, design: .rounded))
+                            .font(.system(size: 34, weight: .heavy, design: .rounded))
                             .foregroundStyle(
                                 LinearGradient(
-                                    colors: [.white, themeManager.secondaryColor.opacity(0.8)],
+                                    colors: [.white, themeManager.secondaryColor.opacity(0.9)],
                                     startPoint: .leading,
                                     endPoint: .trailing
                                 )
                             )
+                            .lineLimit(2)
                         
                         Text(getSubtitle(for: currentPage))
-                            .font(.body)
-                            .foregroundColor(.gray)
-                            .lineSpacing(4)
+                            .font(.system(size: 16, weight: .medium))
+                            .foregroundColor(.white.opacity(0.7))
+                            .lineSpacing(6)
+                            .fixedSize(horizontal: false, vertical: true)
                     }
                     
                     // Modern Progress Indicator
-                    HStack(spacing: 8) {
+                    HStack(spacing: 10) {
                         ForEach(0..<4) { index in
                             Capsule()
-                                .fill(index == currentPage ? themeManager.secondaryColor : Color.white.opacity(0.2))
-                                .frame(width: index == currentPage ? 30 : 8, height: 8)
-                                .animation(.spring(response: 0.3), value: currentPage)
+                                .fill(
+                                    index == currentPage ?
+                                    LinearGradient(
+                                        colors: [themeManager.primaryColor, themeManager.secondaryColor],
+                                        startPoint: .leading,
+                                        endPoint: .trailing
+                                    ) :
+                                    LinearGradient(
+                                        colors: [Color.white.opacity(0.2), Color.white.opacity(0.2)],
+                                        startPoint: .leading,
+                                        endPoint: .trailing
+                                    )
+                                )
+                                .frame(width: index == currentPage ? 40 : 10, height: 10)
+                                .animation(.spring(response: 0.4, dampingFraction: 0.7), value: currentPage)
                         }
                     }
+                    .padding(.vertical, 4)
                     
                     // Modern Gradient Button
                     Button(action: {
@@ -131,17 +133,16 @@ struct OnboardingViewMB: View {
                             }
                         }
                     }) {
-                        HStack {
+                        HStack(spacing: 12) {
                             Text(currentPage == 3 ? "BECOME MRBEST" : "CONTINUE")
-                                .font(.headline)
-                                .fontWeight(.bold)
+                                .font(.system(size: 17, weight: .bold))
                             
                             Image(systemName: "arrow.right")
-                                .font(.headline)
+                                .font(.system(size: 16, weight: .bold))
                         }
                         .foregroundColor(.white)
                         .frame(maxWidth: .infinity)
-                        .padding(.vertical, 18)
+                        .padding(.vertical, 20)
                         .background(
                             LinearGradient(
                                 colors: [themeManager.primaryColor, themeManager.secondaryColor],
@@ -149,30 +150,37 @@ struct OnboardingViewMB: View {
                                 endPoint: .trailing
                             )
                         )
-                        .cornerRadius(16)
-                        .shadow(color: themeManager.primaryColor.opacity(0.5), radius: 15, x: 0, y: 8)
+                        .cornerRadius(18)
+                        .shadow(color: themeManager.primaryColor.opacity(0.6), radius: 20, x: 0, y: 10)
                     }
                 }
-                .padding(30)
+                .padding(.horizontal, 32)
+                .padding(.vertical, 36)
                 .background(
                     ZStack {
                         // Glassmorphism effect
-                        RoundedRectangle(cornerRadius: 30)
-                            .fill(Color.black.opacity(0.6))
+                        RoundedRectangle(cornerRadius: 35)
+                            .fill(Color.black.opacity(0.65))
                             .blur(radius: 0.5)
                         
-                        RoundedRectangle(cornerRadius: 30)
+                        RoundedRectangle(cornerRadius: 35)
                             .stroke(
                                 LinearGradient(
-                                    colors: [themeManager.secondaryColor.opacity(0.3), Color.clear],
+                                    colors: [
+                                        themeManager.secondaryColor.opacity(0.4),
+                                        themeManager.primaryColor.opacity(0.2),
+                                        Color.clear
+                                    ],
                                     startPoint: .topLeading,
                                     endPoint: .bottomTrailing
                                 ),
-                                lineWidth: 1
+                                lineWidth: 1.5
                             )
                     }
-                    .shadow(color: Color.black.opacity(0.5), radius: 30, x: 0, y: -10)
+                    .shadow(color: Color.black.opacity(0.6), radius: 40, x: 0, y: -15)
                 )
+                .padding(.horizontal, 20)
+                .padding(.bottom, 20)
             }
             .ignoresSafeArea()
         }
