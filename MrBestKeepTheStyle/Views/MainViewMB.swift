@@ -78,6 +78,7 @@ struct MainViewMB: View {
                         
                         CustomTabBarMB(currentTab: $currentTab)
                     }
+                    .ignoresSafeArea(.keyboard, edges: .bottom)
                     .transition(.opacity)
                 }
             }

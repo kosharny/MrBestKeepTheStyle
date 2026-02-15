@@ -101,6 +101,15 @@ struct JournalViewMB: View {
                                 ForEach(viewModel.journalEntries.sorted(by: { $0.date > $1.date })) { entry in
                                     JournalEntryRow(entry: entry)
                                         .padding(.horizontal)
+                                        .swipeActions(edge: .trailing, allowsFullSwipe: true) {
+                                            Button(role: .destructive) {
+                                                withAnimation {
+                                                    viewModel.deleteJournalEntry(entry)
+                                                }
+                                            } label: {
+                                                Label("Delete", systemImage: "trash")
+                                            }
+                                        }
                                 }
                             }
                             

@@ -4,6 +4,7 @@ struct SplashViewMB: View {
     @EnvironmentObject var themeManager: ThemeManagerMB
     
     @State private var progress: CGFloat = 0.0
+    @State private var displayedPercentage: Int = 0
     @State private var isAnimating = false
     @State private var logoScale: CGFloat = 0.5
     @State private var logoOpacity: Double = 0
@@ -52,41 +53,35 @@ struct SplashViewMB: View {
                 
                 // Loading Progress
                 VStack(spacing: 20) {
-                    // Circular Progress Ring
-                    ZStack {
-                        // Background circle
-                        Circle()
-                            .stroke(
-                                Color.white.opacity(0.1),
-                                lineWidth: 8
-                            )
-                            .frame(width: 100, height: 100)
-                        
-                        // Progress circle
-                        Circle()
-                            .trim(from: 0, to: progress)
-                            .stroke(
-                                LinearGradient(
-                                    colors: [
-                                        themeManager.primaryColor,
-                                        themeManager.secondaryColor
-                                    ],
-                                    startPoint: .topLeading,
-                                    endPoint: .bottomTrailing
-                                ),
-                                style: StrokeStyle(
-                                    lineWidth: 8,
-                                    lineCap: .round
-                                )
-                            )
-                            .frame(width: 100, height: 100)
-                            .rotationEffect(.degrees(-90))
-                            .shadow(color: themeManager.primaryColor.opacity(0.6), radius: 10)
-                        
-                        // Percentage text
-                        Text("\(Int(progress * 100))%")
-                            .font(.system(size: 20, weight: .bold, design: .rounded))
+                    // Progress Bar
+                    VStack(spacing: 12) {
+                        // Percentage text above bar
+                        Text("\(displayedPercentage)%")
+                            .font(.system(size: 24, weight: .bold, design: .rounded))
                             .foregroundColor(.white)
+                        
+                        // Progress bar container
+                        ZStack(alignment: .leading) {
+                            // Background bar
+                            RoundedRectangle(cornerRadius: 10)
+                                .fill(Color.white.opacity(0.1))
+                                .frame(width: 280, height: 8)
+                            
+                            // Progress bar
+                            RoundedRectangle(cornerRadius: 10)
+                                .fill(
+                                    LinearGradient(
+                                        colors: [
+                                            themeManager.primaryColor,
+                                            themeManager.secondaryColor
+                                        ],
+                                        startPoint: .leading,
+                                        endPoint: .trailing
+                                    )
+                                )
+                                .frame(width: 280 * progress, height: 8)
+                                .shadow(color: themeManager.primaryColor.opacity(0.6), radius: 10)
+                        }
                     }
                     
                     // Loading text
@@ -118,9 +113,18 @@ struct SplashViewMB: View {
             // Start loading text animation
             isAnimating = true
             
-            // Animate progress
+            // Animate progress with smooth percentage counter
             withAnimation(.easeInOut(duration: 2.5)) {
                 progress = 1.0
+            }
+            
+            // Smooth percentage counter animation
+            Timer.scheduledTimer(withTimeInterval: 0.025, repeats: true) { timer in
+                if displayedPercentage < Int(progress * 100) {
+                    displayedPercentage += 1
+                } else if progress >= 1.0 && displayedPercentage >= 100 {
+                    timer.invalidate()
+                }
             }
         }
     }

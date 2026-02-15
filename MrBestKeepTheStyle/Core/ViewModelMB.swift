@@ -206,6 +206,10 @@ class ViewModelMB: ObservableObject {
         journalEntries.sort(by: { $0.date > $1.date })
     }
     
+    func deleteJournalEntry(_ entry: JournalEntryMB) {
+        journalEntries.removeAll { $0.id == entry.id }
+    }
+    
     // MARK: - Statistics Logic
     var totalHabitsCount: Int { habits.count }
     var goodHabitsCount: Int { habits.filter { $0.type == .build }.count }
@@ -220,6 +224,9 @@ class ViewModelMB: ObservableObject {
     var daysSinceInstall: Int {
         let calendar = Calendar.current
         let components = calendar.dateComponents([.day], from: appInstallDate, to: Date())
-        return max(1, (components.day ?? 0) + 1) // +1 to count installation day as day 1
+        let days = (components.day ?? 0) + 1
+        
+        
+        return days 
     }
 }

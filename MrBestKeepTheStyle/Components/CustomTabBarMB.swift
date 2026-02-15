@@ -77,6 +77,7 @@ struct CustomTabBarMB: View {
         .frame(maxWidth: 350)
         .padding(.horizontal)
         .padding(.bottom, 10)
+        .ignoresSafeArea(.keyboard, edges: .bottom)
     }
 }
 

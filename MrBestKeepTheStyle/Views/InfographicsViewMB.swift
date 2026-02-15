@@ -114,12 +114,6 @@ struct InfographicsViewMB: View {
                 }
                 .padding()
                 
-                // Tabs
-                HStack(spacing: 0) {
-                    TabButton(title: "Quit Habits", icon: "xmark.circle.fill", color: .red)
-                    TabButton(title: "Build Habits", icon: "arrow.up.circle.fill", color: .green)
-                }
-                .padding(.horizontal)
                 
                 ScrollView {
                     VStack(spacing: 15) {
