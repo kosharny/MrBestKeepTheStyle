@@ -15,7 +15,7 @@
             buildForAnalyzing = "YES">
             <BuildableReference
                BuildableIdentifier = "primary"
-               BlueprintIdentifier = "DDB09A9E2F3F9493002D2B07"
+               BlueprintIdentifier = "11449A9E2F3F9493002D2B07"
                BuildableName = "MrBestKeepTheStyle.app"
                BlueprintName = "MrBestKeepTheStyle"
                ReferencedContainer = "container:MrBestKeepTheStyle.xcodeproj">
@@ -44,7 +44,7 @@
          runnableDebuggingMode = "0">
          <BuildableReference
             BuildableIdentifier = "primary"
-            BlueprintIdentifier = "DDB09A9E2F3F9493002D2B07"
+            BlueprintIdentifier = "11449A9E2F3F9493002D2B07"
             BuildableName = "MrBestKeepTheStyle.app"
             BlueprintName = "MrBestKeepTheStyle"
             ReferencedContainer = "container:MrBestKeepTheStyle.xcodeproj">
@@ -64,7 +64,7 @@
          runnableDebuggingMode = "0">
          <BuildableReference
             BuildableIdentifier = "primary"
-            BlueprintIdentifier = "DDB09A9E2F3F9493002D2B07"
+            BlueprintIdentifier = "11449A9E2F3F9493002D2B07"
             BuildableName = "MrBestKeepTheStyle.app"
             BlueprintName = "MrBestKeepTheStyle"
             ReferencedContainer = "container:MrBestKeepTheStyle.xcodeproj">

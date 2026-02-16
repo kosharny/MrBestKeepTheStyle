@@ -7,18 +7,18 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
-		DDB09AAF2F3F9562002D2B07 /* FirebaseAnalyticsCore in Frameworks */ = {isa = PBXBuildFile; productRef = DDB09AAE2F3F9562002D2B07 /* FirebaseAnalyticsCore */; };
-		DDB09AB12F3F9562002D2B07 /* FirebaseAuth in Frameworks */ = {isa = PBXBuildFile; productRef = DDB09AB02F3F9562002D2B07 /* FirebaseAuth */; };
-		DDB09AB32F3F9562002D2B07 /* FirebaseFirestore in Frameworks */ = {isa = PBXBuildFile; productRef = DDB09AB22F3F9562002D2B07 /* FirebaseFirestore */; };
-		DDB09AB52F3F9562002D2B07 /* FirebaseMessaging in Frameworks */ = {isa = PBXBuildFile; productRef = DDB09AB42F3F9562002D2B07 /* FirebaseMessaging */; };
+    11449AAF2F3F9562002D2B07 /* FirebaseAnalyticsCore in Frameworks */ = {isa = PBXBuildFile; productRef = 11449AAE2F3F9562002D2B07 /* FirebaseAnalyticsCore */; };
+    11449AB12F3F9562002D2B07 /* FirebaseAuth in Frameworks */ = {isa = PBXBuildFile; productRef = 11449AB02F3F9562002D2B07 /* FirebaseAuth */; };
+    11449AB32F3F9562002D2B07 /* FirebaseFirestore in Frameworks */ = {isa = PBXBuildFile; productRef = 11449AB22F3F9562002D2B07 /* FirebaseFirestore */; };
+    11449AB52F3F9562002D2B07 /* FirebaseMessaging in Frameworks */ = {isa = PBXBuildFile; productRef = 11449AB42F3F9562002D2B07 /* FirebaseMessaging */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
-		DDB09A9F2F3F9493002D2B07 /* MrBestKeepTheStyle.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = MrBestKeepTheStyle.app; sourceTree = BUILT_PRODUCTS_DIR; };
+    11449A9F2F3F9493002D2B07 /* MrBestKeepTheStyle.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = MrBestKeepTheStyle.app; sourceTree = BUILT_PRODUCTS_DIR; };
 /* End PBXFileReference section */
 
 /* Begin PBXFileSystemSynchronizedRootGroup section */
-		DDB09AA12F3F9493002D2B07 /* MrBestKeepTheStyle */ = {
+    11449AA12F3F9493002D2B07 /* MrBestKeepTheStyle */ = {
 			isa = PBXFileSystemSynchronizedRootGroup;
 			path = MrBestKeepTheStyle;
 			sourceTree = "<group>";
@@ -26,32 +26,32 @@
 /* End PBXFileSystemSynchronizedRootGroup section */
 
 /* Begin PBXFrameworksBuildPhase section */
-		DDB09A9C2F3F9493002D2B07 /* Frameworks */ = {
+    11449A9C2F3F9493002D2B07 /* Frameworks */ = {
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				DDB09AB52F3F9562002D2B07 /* FirebaseMessaging in Frameworks */,
-				DDB09AAF2F3F9562002D2B07 /* FirebaseAnalyticsCore in Frameworks */,
-				DDB09AB12F3F9562002D2B07 /* FirebaseAuth in Frameworks */,
-				DDB09AB32F3F9562002D2B07 /* FirebaseFirestore in Frameworks */,
+                     11449AB52F3F9562002D2B07 /* FirebaseMessaging in Frameworks */,
+                     11449AAF2F3F9562002D2B07 /* FirebaseAnalyticsCore in Frameworks */,
+                     11449AB12F3F9562002D2B07 /* FirebaseAuth in Frameworks */,
+                     11449AB32F3F9562002D2B07 /* FirebaseFirestore in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
-		DDB09A962F3F9493002D2B07 = {
+    11449A962F3F9493002D2B07 = {
 			isa = PBXGroup;
 			children = (
-				DDB09AA12F3F9493002D2B07 /* MrBestKeepTheStyle */,
-				DDB09AA02F3F9493002D2B07 /* Products */,
+                        11449AA12F3F9493002D2B07 /* MrBestKeepTheStyle */,
+                        11449AA02F3F9493002D2B07 /* Products */,
 			);
 			sourceTree = "<group>";
 		};
-		DDB09AA02F3F9493002D2B07 /* Products */ = {
+    11449AA02F3F9493002D2B07 /* Products */ = {
 			isa = PBXGroup;
 			children = (
-				DDB09A9F2F3F9493002D2B07 /* MrBestKeepTheStyle.app */,
+                        11449A9F2F3F9493002D2B07 /* MrBestKeepTheStyle.app */,
 			);
 			name = Products;
 			sourceTree = "<group>";
@@ -59,71 +59,71 @@
 /* End PBXGroup section */
 
 /* Begin PBXNativeTarget section */
-		DDB09A9E2F3F9493002D2B07 /* MrBestKeepTheStyle */ = {
+    11449A9E2F3F9493002D2B07 /* MrBestKeepTheStyle */ = {
 			isa = PBXNativeTarget;
-			buildConfigurationList = DDB09AAA2F3F9495002D2B07 /* Build configuration list for PBXNativeTarget "MrBestKeepTheStyle" */;
+			buildConfigurationList = 11449AAA2F3F9495002D2B07 /* Build configuration list for PBXNativeTarget "MrBestKeepTheStyle" */;
 			buildPhases = (
-				DDB09A9B2F3F9493002D2B07 /* Sources */,
-				DDB09A9C2F3F9493002D2B07 /* Frameworks */,
-				DDB09A9D2F3F9493002D2B07 /* Resources */,
+                           11449A9B2F3F9493002D2B07 /* Sources */,
+                           11449A9C2F3F9493002D2B07 /* Frameworks */,
+                           11449A9D2F3F9493002D2B07 /* Resources */,
 			);
 			buildRules = (
 			);
 			dependencies = (
 			);
 			fileSystemSynchronizedGroups = (
-				DDB09AA12F3F9493002D2B07 /* MrBestKeepTheStyle */,
+                                            11449AA12F3F9493002D2B07 /* MrBestKeepTheStyle */,
 			);
 			name = MrBestKeepTheStyle;
 			packageProductDependencies = (
-				DDB09AAE2F3F9562002D2B07 /* FirebaseAnalyticsCore */,
-				DDB09AB02F3F9562002D2B07 /* FirebaseAuth */,
-				DDB09AB22F3F9562002D2B07 /* FirebaseFirestore */,
-				DDB09AB42F3F9562002D2B07 /* FirebaseMessaging */,
+                                          11449AAE2F3F9562002D2B07 /* FirebaseAnalyticsCore */,
+                                          11449AB02F3F9562002D2B07 /* FirebaseAuth */,
+                                          11449AB22F3F9562002D2B07 /* FirebaseFirestore */,
+                                          11449AB42F3F9562002D2B07 /* FirebaseMessaging */,
 			);
 			productName = MrBestKeepTheStyle;
-			productReference = DDB09A9F2F3F9493002D2B07 /* MrBestKeepTheStyle.app */;
+			productReference = 11449A9F2F3F9493002D2B07 /* MrBestKeepTheStyle.app */;
 			productType = "com.apple.product-type.application";
 		};
 /* End PBXNativeTarget section */
 
 /* Begin PBXProject section */
-		DDB09A972F3F9493002D2B07 /* Project object */ = {
+    11449A972F3F9493002D2B07 /* Project object */ = {
 			isa = PBXProject;
 			attributes = {
 				BuildIndependentTargetsInParallel = 1;
 				LastSwiftUpdateCheck = 2620;
 				LastUpgradeCheck = 2620;
 				TargetAttributes = {
-					DDB09A9E2F3F9493002D2B07 = {
+                    11449A9E2F3F9493002D2B07 = {
 						CreatedOnToolsVersion = 26.2;
 					};
 				};
 			};
-			buildConfigurationList = DDB09A9A2F3F9493002D2B07 /* Build configuration list for PBXProject "MrBestKeepTheStyle" */;
+			buildConfigurationList = 11449A9A2F3F9493002D2B07 /* Build configuration list for PBXProject "MrBestKeepTheStyle" */;
 			developmentRegion = en;
 			hasScannedForEncodings = 0;
 			knownRegions = (
 				en,
 				Base,
 			);
-			mainGroup = DDB09A962F3F9493002D2B07;
+			mainGroup = 11449A962F3F9493002D2B07;
 			minimizedProjectReferenceProxies = 1;
 			packageReferences = (
-				DDB09AAD2F3F9562002D2B07 /* XCRemoteSwiftPackageReference "firebase-ios-sdk" */,
+                                 11449AAD2F3F9562002D2B07 /* XCRemoteSwiftPackageReference "firebase-ios-sdk" */,
 			);
 			preferredProjectObjectVersion = 77;
-			productRefGroup = DDB09AA02F3F9493002D2B07 /* Products */;
+			productRefGroup = 11449AA02F3F9493002D2B07 /* Products */;
 			projectDirPath = "";
 			projectRoot = "";
 			targets = (
-				DDB09A9E2F3F9493002D2B07 /* MrBestKeepTheStyle */,
+                       11449A9E2F3F9493002D2B07 /* MrBestKeepTheStyle */,
 			);
 		};
 /* End PBXProject section */
 
 /* Begin PBXResourcesBuildPhase section */
-		DDB09A9D2F3F9493002D2B07 /* Resources */ = {
+    11449A9D2F3F9493002D2B07 /* Resources */ = {
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
@@ -133,7 +133,7 @@
 /* End PBXResourcesBuildPhase section */
 
 /* Begin PBXSourcesBuildPhase section */
-		DDB09A9B2F3F9493002D2B07 /* Sources */ = {
+    11449A9B2F3F9493002D2B07 /* Sources */ = {
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
@@ -143,7 +143,7 @@
 /* End PBXSourcesBuildPhase section */
 
 /* Begin XCBuildConfiguration section */
-		DDB09AA82F3F9495002D2B07 /* Debug */ = {
+    11449AA82F3F9495002D2B07 /* Debug */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ALWAYS_SEARCH_USER_PATHS = NO;
@@ -207,7 +207,7 @@
 			};
 			name = Debug;
 		};
-		DDB09AA92F3F9495002D2B07 /* Release */ = {
+    11449AA92F3F9495002D2B07 /* Release */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ALWAYS_SEARCH_USER_PATHS = NO;
@@ -264,7 +264,7 @@
 			};
 			name = Release;
 		};
-		DDB09AAB2F3F9495002D2B07 /* Debug */ = {
+    11449AAB2F3F9495002D2B07 /* Debug */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
@@ -302,7 +302,7 @@
 			};
 			name = Debug;
 		};
-		DDB09AAC2F3F9495002D2B07 /* Release */ = {
+    11449AAC2F3F9495002D2B07 /* Release */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
@@ -343,20 +343,20 @@
 /* End XCBuildConfiguration section */
 
 /* Begin XCConfigurationList section */
-		DDB09A9A2F3F9493002D2B07 /* Build configuration list for PBXProject "MrBestKeepTheStyle" */ = {
+    11449A9A2F3F9493002D2B07 /* Build configuration list for PBXProject "MrBestKeepTheStyle" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (
-				DDB09AA82F3F9495002D2B07 /* Debug */,
-				DDB09AA92F3F9495002D2B07 /* Release */,
+                                   11449AA82F3F9495002D2B07 /* Debug */,
+                                   11449AA92F3F9495002D2B07 /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;
 		};
-		DDB09AAA2F3F9495002D2B07 /* Build configuration list for PBXNativeTarget "MrBestKeepTheStyle" */ = {
+    11449AAA2F3F9495002D2B07 /* Build configuration list for PBXNativeTarget "MrBestKeepTheStyle" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (
-				DDB09AAB2F3F9495002D2B07 /* Debug */,
-				DDB09AAC2F3F9495002D2B07 /* Release */,
+                                   11449AAB2F3F9495002D2B07 /* Debug */,
+                                   11449AAC2F3F9495002D2B07 /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;
@@ -364,7 +364,7 @@
 /* End XCConfigurationList section */
 
 /* Begin XCRemoteSwiftPackageReference section */
-		DDB09AAD2F3F9562002D2B07 /* XCRemoteSwiftPackageReference "firebase-ios-sdk" */ = {
+    11449AAD2F3F9562002D2B07 /* XCRemoteSwiftPackageReference "firebase-ios-sdk" */ = {
 			isa = XCRemoteSwiftPackageReference;
 			repositoryURL = "https://github.com/firebase/firebase-ios-sdk.git";
 			requirement = {
@@ -375,27 +375,27 @@
 /* End XCRemoteSwiftPackageReference section */
 
 /* Begin XCSwiftPackageProductDependency section */
-		DDB09AAE2F3F9562002D2B07 /* FirebaseAnalyticsCore */ = {
+    11449AAE2F3F9562002D2B07 /* FirebaseAnalyticsCore */ = {
 			isa = XCSwiftPackageProductDependency;
-			package = DDB09AAD2F3F9562002D2B07 /* XCRemoteSwiftPackageReference "firebase-ios-sdk" */;
+			package = 11449AAD2F3F9562002D2B07 /* XCRemoteSwiftPackageReference "firebase-ios-sdk" */;
 			productName = FirebaseAnalyticsCore;
 		};
-		DDB09AB02F3F9562002D2B07 /* FirebaseAuth */ = {
+    11449AB02F3F9562002D2B07 /* FirebaseAuth */ = {
 			isa = XCSwiftPackageProductDependency;
-			package = DDB09AAD2F3F9562002D2B07 /* XCRemoteSwiftPackageReference "firebase-ios-sdk" */;
+			package = 11449AAD2F3F9562002D2B07 /* XCRemoteSwiftPackageReference "firebase-ios-sdk" */;
 			productName = FirebaseAuth;
 		};
-		DDB09AB22F3F9562002D2B07 /* FirebaseFirestore */ = {
+    11449AB22F3F9562002D2B07 /* FirebaseFirestore */ = {
 			isa = XCSwiftPackageProductDependency;
-			package = DDB09AAD2F3F9562002D2B07 /* XCRemoteSwiftPackageReference "firebase-ios-sdk" */;
+			package = 11449AAD2F3F9562002D2B07 /* XCRemoteSwiftPackageReference "firebase-ios-sdk" */;
 			productName = FirebaseFirestore;
 		};
-		DDB09AB42F3F9562002D2B07 /* FirebaseMessaging */ = {
+    11449AB42F3F9562002D2B07 /* FirebaseMessaging */ = {
 			isa = XCSwiftPackageProductDependency;
-			package = DDB09AAD2F3F9562002D2B07 /* XCRemoteSwiftPackageReference "firebase-ios-sdk" */;
+			package = 11449AAD2F3F9562002D2B07 /* XCRemoteSwiftPackageReference "firebase-ios-sdk" */;
 			productName = FirebaseMessaging;
 		};
 /* End XCSwiftPackageProductDependency section */
 	};
-	rootObject = DDB09A972F3F9493002D2B07 /* Project object */;
+	rootObject = 11449A972F3F9493002D2B07 /* Project object */;
 }
